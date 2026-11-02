@@ -5,6 +5,7 @@ import {
   Paperclip,
   Trash2,
   Type,
+  Lock,
   WifiOff,
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -775,7 +776,19 @@ export function ComposeWindow({ draft }: { draft: ComposeDraft }) {
               onSaveAsTemplate={handleSaveAsTemplate}
             />
 
-            {/* SO-09 & SO-12: Menu ba chấm (Chữ ký & Chế độ bảo mật) */}
+            {/* SO-12: Nút ổ khóa Chế độ bảo mật */}
+                        <button
+                          type="button"
+                          title="Chế độ bảo mật"
+                          aria-label="Chế độ bảo mật"
+                          onClick={() => setShowConfidentialDialog(true)}
+                          className={`inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-hover ${
+                            draft.confidential ? "bg-accent-soft text-accent" : "text-muted hover:text-fg"
+                          }`}
+                        >
+                          <Lock size={17} />
+                        </button>
+                        {/* SO-09 & SO-12: Menu ba chấm (Chữ ký & Chế độ bảo mật) */}
             <ComposeMoreMenu
               activeSigId={draft.signatureId}
               onSelectSignature={applySignature}
