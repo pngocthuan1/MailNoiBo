@@ -9,12 +9,12 @@ import {
   Send,
   Star,
   Trash2,
-} from "lucide-react"
-import { useMemo } from "react"
-import { folders, type FolderId } from "@/mock-data"
-import { folderCount } from "@/shared/state/mailSelectors"
-import { useMailStore } from "@/shared/state/mailStore"
-import { SidebarItem } from "./SidebarItem"
+} from 'lucide-react'
+import { useMemo } from 'react'
+import { folders, type FolderId } from '@/mock-data'
+import { folderCount } from '@/shared/state/mailSelectors'
+import { useMailStore } from '@/shared/state/mailStore'
+import { SidebarItem } from './SidebarItem'
 
 const icons: Record<FolderId, typeof Inbox> = {
   inbox: Inbox,
@@ -31,11 +31,7 @@ const icons: Record<FolderId, typeof Inbox> = {
 
 export function SidebarFolders({ collapsed }: { collapsed: boolean }) {
   const emails = useMailStore((st) => st.emails)
-  const counts = useMemo(
-    () =>
-      Object.fromEntries(folders.map((f) => [f.id, folderCount(emails, f.id)])),
-    [emails],
-  )
+  const counts = useMemo(() => Object.fromEntries(folders.map((f) => [f.id, folderCount(emails, f.id)])), [emails])
   return (
     <nav aria-label="Hộp thư" className="flex flex-col gap-0.5">
       {folders.map((f) => {

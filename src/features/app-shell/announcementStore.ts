@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react"
+import { useSyncExternalStore } from 'react'
 
 let acknowledged = false
 const listeners = new Set<() => void>()

@@ -179,7 +179,11 @@ export function ThreadView({
               )}
             </div>
             <MessageList messages={messages} email={email} ctx={ctx} />
-            <ReplyArea composer={composer} smartReplies={extras.smartReplies} />
+            <ReplyArea
+              composer={composer}
+              smartReplies={extras.smartReplies}
+              restricted={confidential?.restricted}
+            />
           </>
         ) : null}
       </div>

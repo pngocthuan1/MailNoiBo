@@ -1,42 +1,28 @@
-import { useState } from "react"
-import { UserPlus } from "lucide-react"
-import {
-  currentUser,
-  employees,
-  getDepartment,
-  getEmployee,
-  type Email,
-} from "@/mock-data"
-import { Avatar } from "@/shared/ui/Avatar"
-import { Popover } from "@/shared/ui/Popover"
-import type { useMailActions } from "./useMailActions"
+import { useState } from 'react'
+import { UserPlus } from 'lucide-react'
+import { currentUser, employees, getDepartment, getEmployee, type Email } from '@/mock-data'
+import { Avatar } from '@/shared/ui/Avatar'
+import { Popover } from '@/shared/ui/Popover'
+import type { useMailActions } from './useMailActions'
 
-type Props = { email: Email actions: ReturnType<typeof useMailActions> }
+type Props = { email: Email; actions: ReturnType<typeof useMailActions> }
 
 /** Cột "Người xử lý" của hộp thư dùng chung kèm menu "Giao cho" (NB-02). */
 export function AssigneeCell({ email, actions }: Props) {
   const assignee = email.assigneeId ? getEmployee(email.assigneeId) : undefined
-  const [q, setQ] = useState("")
+  const [q, setQ] = useState('')
 
   return (
-    <span
-      className="flex w-44 shrink-0 items-center gap-1"
-      onClick={(e) => e.stopPropagation()}
-    >
+    <span className="flex w-44 shrink-0 items-center gap-1" onClick={(e) => e.stopPropagation()}>
       {assignee ? (
-        <span
-          className="flex min-w-0 flex-1 items-center gap-2"
-          title={`${assignee.name} - ${assignee.title}`}
-        >
+        <span className="flex min-w-0 flex-1 items-center gap-2" title={`${assignee.name} - ${assignee.title}`}>
           <Avatar name={assignee.name} size={24} status={assignee.status} />
-          <span className="truncate text-xs font-medium">
-            {assignee.name.split(" ").slice(-2).join(" ")}
-          </span>
+          <span className="truncate text-xs font-medium">{assignee.name.split(' ').slice(-2).join(' ')}</span>
         </span>
       ) : (
         <button
           type="button"
-          onClick={() => actions.assign([email.id], currentUser.id, "bạn")}
+          onClick={() => actions.assign([email.id], currentUser.id, 'bạn')}
           className="h-8 flex-1 cursor-pointer rounded-full border border-accent px-3 text-xs font-medium text-accent hover:bg-accent-soft"
         >
           Nhận xử lý
@@ -71,11 +57,7 @@ export function AssigneeCell({ email, actions }: Props) {
             </div>
             <ul className="max-h-60 overflow-y-auto">
               {employees
-                .filter((m) =>
-                  `${m.name} ${m.email}`
-                    .toLowerCase()
-                    .includes(q.trim().toLowerCase()),
-                )
+                .filter((m) => `${m.name} ${m.email}`.toLowerCase().includes(q.trim().toLowerCase()))
                 .map((m) => (
                   <li key={m.id}>
                     <button
@@ -89,9 +71,7 @@ export function AssigneeCell({ email, actions }: Props) {
                       <Avatar name={m.name} size={32} status={m.status} />
                       <span className="min-w-0">
                         <span className="block truncate">{m.name}</span>
-                        <span className="block truncate text-xs text-muted">
-                          {getDepartment(m.departmentId)?.name}
-                        </span>
+                        <span className="block truncate text-xs text-muted">{getDepartment(m.departmentId)?.name}</span>
                       </span>
                     </button>
                   </li>

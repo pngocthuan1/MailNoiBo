@@ -1,5 +1,5 @@
-import { Outlet } from "react-router-dom"
-import { Logo } from "@/features/app-shell/Logo"
+import { Outlet } from 'react-router-dom'
+import { Logo } from '@/features/app-shell/Logo'
 
 export function AuthLayout() {
   return (

@@ -1,25 +1,15 @@
-import type { ReactNode } from "react"
-import {
-  Archive,
-  Clock,
-  Mail,
-  MailOpen,
-  MoreVertical,
-  OctagonAlert,
-  RotateCcw,
-  Star,
-  Trash2,
-} from "lucide-react"
-import type { Email } from "@/mock-data"
-import { Popover } from "@/shared/ui/Popover"
-import { LabelMenu } from "./LabelMenu"
-import { SelectAllControl, type SelectMode } from "./SelectAllControl"
-import type { Variant } from "./MailRow"
-import type { useMailActions } from "./useMailActions"
+import type { ReactNode } from 'react'
+import { Archive, Clock, Mail, MailOpen, MoreVertical, OctagonAlert, RotateCcw, Star, Trash2 } from 'lucide-react'
+import type { Email } from '@/mock-data'
+import { Popover } from '@/shared/ui/Popover'
+import { LabelMenu } from './LabelMenu'
+import { SelectAllControl, type SelectMode } from './SelectAllControl'
+import type { Variant } from './MailRow'
+import type { useMailActions } from './useMailActions'
 
 type Props = {
   selected: Email[]
-  allCheckedState: "some" | "all"
+  allCheckedState: 'some' | 'all'
   variant: Variant
   actions: ReturnType<typeof useMailActions>
   onSelect: (m: SelectMode) => void
@@ -28,15 +18,7 @@ type Props = {
   onDone: () => void
 }
 
-function Tool({
-  label,
-  onClick,
-  children,
-}: {
-  label: string
-  onClick: () => void
-  children: ReactNode
-}) {
+function Tool({ label, onClick, children }: { label: string; onClick: () => void; children: ReactNode }) {
   return (
     <button
       type="button"
@@ -51,16 +33,7 @@ function Tool({
 }
 
 /** Thanh công cụ khi đã chọn thư: thay thế thanh trên (HT-03, HT-04, HT-05, HT-09, NH-02). */
-export function SelectionToolbar({
-  selected,
-  allCheckedState,
-  variant,
-  actions,
-  onSelect,
-  onSnooze,
-  onDeleteForever,
-  onDone,
-}: Props) {
+export function SelectionToolbar({ selected, allCheckedState, variant, actions, onSelect, onSnooze, onDeleteForever, onDone }: Props) {
   const ids = selected.map((e) => e.id)
   const anyUnread = selected.some((e) => e.unread)
   const allStarred = selected.every((e) => e.starred)
@@ -71,14 +44,12 @@ export function SelectionToolbar({
     onDone()
   }
 
-  const bin = variant === "trash" || variant === "spam"
+  const bin = variant === 'trash' || variant === 'spam'
 
   return (
     <div className="flex h-12 items-center gap-1 border-b border-line bg-accent-soft px-2">
       <SelectAllControl state={allCheckedState} onSelect={onSelect} />
-      <span className="mr-2 ml-1 font-medium whitespace-nowrap">
-        {selected.length} đã chọn
-      </span>
+      <span className="mr-2 ml-1 font-medium whitespace-nowrap">{selected.length} đã chọn</span>
       {bin ? (
         <>
           <button
@@ -111,7 +82,7 @@ export function SelectionToolbar({
           </Tool>
           <span className="mx-1 h-5 w-px bg-line" />
           <Tool
-            label={anyUnread ? "Đánh dấu đã đọc" : "Đánh dấu chưa đọc"}
+            label={anyUnread ? 'Đánh dấu đã đọc' : 'Đánh dấu chưa đọc'}
             onClick={finish(() => actions.markRead(ids, anyUnread))}
           >
             {anyUnread ? <MailOpen size={16} /> : <Mail size={16} />}
@@ -125,7 +96,7 @@ export function SelectionToolbar({
             onCreate={(name) => actions.createLabelAndApply(ids, name)}
           />
           <Tool
-            label={allStarred ? "Bỏ gắn sao" : "Gắn sao"}
+            label={allStarred ? 'Bỏ gắn sao' : 'Gắn sao'}
             onClick={finish(() => actions.toggleStar(ids, !allStarred))}
           >
             <Star size={16} />
@@ -149,9 +120,7 @@ export function SelectionToolbar({
                 }}
                 className="flex h-9 w-full cursor-pointer items-center px-4 hover:bg-hover"
               >
-                {allImportant
-                  ? "Bỏ đánh dấu quan trọng"
-                  : "Đánh dấu quan trọng"}
+                {allImportant ? 'Bỏ đánh dấu quan trọng' : 'Đánh dấu quan trọng'}
               </button>
             )}
           </Popover>

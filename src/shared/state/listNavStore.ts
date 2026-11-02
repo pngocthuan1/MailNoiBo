@@ -1,4 +1,4 @@
-import { create } from "zustand"
+import { create } from 'zustand'
 
 /** Trạng thái điều hướng bàn phím của danh sách thư (CD-07), dùng chung với bộ phím tắt. */
 type ListNav = {
@@ -18,5 +18,4 @@ export const useListNavStore = create<ListNav>(() => ({
   helpOpen: false,
 }))
 
-export const setListNav = (patch: Partial<ListNav>) =>
-  useListNavStore.setState(patch)
+export const setListNav = (patch: Partial<ListNav>) => useListNavStore.setState(patch)

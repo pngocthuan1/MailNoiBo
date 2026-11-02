@@ -1,4 +1,4 @@
-import { company } from "@/mock-data"
+import { company } from '@/mock-data'
 
 export function Logo({ showName = true }: { showName?: boolean }) {
   return (
@@ -6,11 +6,7 @@ export function Logo({ showName = true }: { showName?: boolean }) {
       <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-bold text-on-accent">
         HL
       </span>
-      {showName && (
-        <span className="hidden text-lg font-semibold whitespace-nowrap sm:inline">
-          {company.appName}
-        </span>
-      )}
+      {showName && <span className="hidden text-lg font-semibold whitespace-nowrap sm:inline">{company.appName}</span>}
     </span>
   )
 }

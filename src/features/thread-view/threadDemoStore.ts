@@ -1,6 +1,6 @@
-import { create } from "zustand"
+import { create } from 'zustand'
 
-export type ThreadDemoView = "normal" | "loading" | "error"
+export type ThreadDemoView = 'normal' | 'loading' | 'error'
 
 type DemoState = {
   view: ThreadDemoView
@@ -8,15 +8,14 @@ type DemoState = {
   translateFails: boolean
   /** Lần xem trước tệp đầu tiên báo lỗi (Thử lại sẽ thành công) */
   previewFails: boolean
-  recallOutcome: "success" | "partial" | "failed"
+  recallOutcome: 'success' | 'partial' | 'failed'
 }
 
 export const useThreadDemoStore = create<DemoState>(() => ({
-  view: "normal",
+  view: 'normal',
   translateFails: false,
   previewFails: false,
-  recallOutcome: "success",
+  recallOutcome: 'success',
 }))
 
-export const setThreadDemo = (patch: Partial<DemoState>) =>
-  useThreadDemoStore.setState(patch)
+export const setThreadDemo = (patch: Partial<DemoState>) => useThreadDemoStore.setState(patch)

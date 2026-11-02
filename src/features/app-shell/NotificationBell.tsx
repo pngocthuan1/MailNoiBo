@@ -1,10 +1,10 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import { Bell, ShieldAlert, Megaphone, Clock, Mail } from "lucide-react"
-import { getEmployee, notifications as seed } from "@/mock-data"
-import { Avatar } from "@/shared/ui/Avatar"
-import { IconButton } from "@/shared/ui/IconButton"
-import { Popover } from "@/shared/ui/Popover"
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Bell, ShieldAlert, Megaphone, Clock, Mail } from 'lucide-react'
+import { getEmployee, notifications as seed } from '@/mock-data'
+import { Avatar } from '@/shared/ui/Avatar'
+import { IconButton } from '@/shared/ui/IconButton'
+import { Popover } from '@/shared/ui/Popover'
 
 const kindIcon = {
   mail: Mail,
@@ -15,9 +15,9 @@ const kindIcon = {
 
 export function NotificationBell() {
   const [items, setItems] = useState(seed)
-  const [tab, setTab] = useState<"all" | "unread">("all")
+  const [tab, setTab] = useState<'all' | 'unread'>('all')
   const unread = items.filter((n) => n.unread).length
-  const shown = tab === "all" ? items : items.filter((n) => n.unread)
+  const shown = tab === 'all' ? items : items.filter((n) => n.unread)
 
   return (
     <Popover
@@ -36,27 +36,21 @@ export function NotificationBell() {
       {(close) => (
         <div>
           <div className="flex items-center gap-1 border-b border-line px-2 pt-2">
-            {(["all", "unread"] as const).map((t) => (
+            {(['all', 'unread'] as const).map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => setTab(t)}
                 className={`h-10 cursor-pointer border-b-2 px-3 font-medium ${
-                  tab === t
-                    ? "border-accent text-accent"
-                    : "border-transparent text-muted hover:text-fg"
+                  tab === t ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-fg'
                 }`}
               >
-                {t === "all" ? "Tất cả" : `Chưa đọc (${unread})`}
+                {t === 'all' ? 'Tất cả' : `Chưa đọc (${unread})`}
               </button>
             ))}
           </div>
           <ul className="max-h-[400px] overflow-y-auto">
-            {shown.length === 0 && (
-              <li className="p-8 text-center text-muted">
-                Không có thông báo nào.
-              </li>
-            )}
+            {shown.length === 0 && <li className="p-8 text-center text-muted">Không có thông báo nào.</li>}
             {shown.map((n) => {
               const actor = n.actorId ? getEmployee(n.actorId) : undefined
               const Icon = kindIcon[n.kind]
@@ -65,13 +59,7 @@ export function NotificationBell() {
                   <button
                     type="button"
                     className="flex w-full cursor-pointer items-start gap-3 px-4 py-3 text-left hover:bg-hover"
-                    onClick={() =>
-                      setItems((l) =>
-                        l.map((x) =>
-                          x.id === n.id ? { ...x, unread: false } : x,
-                        ),
-                      )
-                    }
+                    onClick={() => setItems((l) => l.map((x) => (x.id === n.id ? { ...x, unread: false } : x)))}
                   >
                     {actor ? (
                       <Avatar name={actor.name} size={32} />
@@ -81,19 +69,10 @@ export function NotificationBell() {
                       </span>
                     )}
                     <span className="min-w-0 flex-1">
-                      <span
-                        className={`block ${n.unread ? "font-semibold" : ""}`}
-                      >
-                        {n.text}
-                      </span>
+                      <span className={`block ${n.unread ? 'font-semibold' : ''}`}>{n.text}</span>
                       <span className="text-xs text-muted">{n.time}</span>
                     </span>
-                    {n.unread && (
-                      <span
-                        className="mt-2 h-2 w-2 shrink-0 rounded-full bg-accent"
-                        aria-label="Chưa đọc"
-                      />
-                    )}
+                    {n.unread && <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-accent" aria-label="Chưa đọc" />}
                   </button>
                 </li>
               )
@@ -103,9 +82,7 @@ export function NotificationBell() {
             <button
               type="button"
               className="h-8 cursor-pointer rounded px-2 text-accent hover:bg-accent-soft"
-              onClick={() =>
-                setItems((l) => l.map((x) => ({ ...x, unread: false })))
-              }
+              onClick={() => setItems((l) => l.map((x) => ({ ...x, unread: false })))}
             >
               Đánh dấu tất cả đã đọc
             </button>

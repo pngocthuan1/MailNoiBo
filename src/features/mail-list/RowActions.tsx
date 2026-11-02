@@ -1,8 +1,8 @@
-import type { ReactNode } from "react"
-import { Archive, Clock, Mail, MailOpen, Trash2 } from "lucide-react"
-import type { Email } from "@/mock-data"
-import type { Variant } from "./MailRow"
-import type { useMailActions } from "./useMailActions"
+import type { ReactNode } from 'react'
+import { Archive, Clock, Mail, MailOpen, Trash2 } from 'lucide-react'
+import type { Email } from '@/mock-data'
+import type { Variant } from './MailRow'
+import type { useMailActions } from './useMailActions'
 
 type Actions = ReturnType<typeof useMailActions>
 
@@ -15,17 +15,7 @@ type Props = {
   onDeleteForever: (ids: string[]) => void
 }
 
-function Btn({
-  label,
-  children,
-  onClick,
-  text,
-}: {
-  label: string
-  children: ReactNode
-  onClick: () => void
-  text?: boolean
-}) {
+function Btn({ label, children, onClick, text }: { label: string; children: ReactNode; onClick: () => void; text?: boolean }) {
   return (
     <button
       type="button"
@@ -36,7 +26,7 @@ function Btn({
         onClick()
       }}
       className={`inline-flex h-8 cursor-pointer items-center justify-center rounded-full text-sm font-medium text-muted hover:bg-hover hover:text-fg ${
-        text ? "px-3 text-accent hover:text-accent" : "w-8"
+        text ? 'px-3 text-accent hover:text-accent' : 'w-8'
       }`}
     >
       {children}
@@ -45,14 +35,7 @@ function Btn({
 }
 
 /** 4 nút hiện khi rê chuột lên dòng thư (HT-11), thay đổi theo từng hộp thư. */
-export function RowActions({
-  email,
-  variant,
-  actions,
-  onSnooze,
-  onReschedule,
-  onDeleteForever,
-}: Props) {
+export function RowActions({ email, variant, actions, onSnooze, onReschedule, onDeleteForever }: Props) {
   const ids = [email.id]
   const archive = (
     <Btn key="a" label="Lưu trữ" onClick={() => actions.archive(ids)}>
@@ -66,8 +49,8 @@ export function RowActions({
   )
 
   switch (variant) {
-    case "trash":
-    case "spam":
+    case 'trash':
+    case 'spam':
       return (
         <>
           <Btn text label="Khôi phục" onClick={() => actions.restore(ids)}>
@@ -78,24 +61,20 @@ export function RowActions({
           </Btn>
         </>
       )
-    case "drafts":
+    case 'drafts':
       return del
-    case "scheduled":
+    case 'scheduled':
       return (
         <>
           <Btn text label="Sửa giờ" onClick={() => onReschedule(ids)}>
             Sửa giờ
           </Btn>
-          <Btn
-            text
-            label="Hủy lịch"
-            onClick={() => actions.cancelSchedule(ids)}
-          >
+          <Btn text label="Hủy lịch" onClick={() => actions.cancelSchedule(ids)}>
             Hủy lịch
           </Btn>
         </>
       )
-    case "snoozed":
+    case 'snoozed':
       return (
         <>
           <Btn text label="Bỏ hoãn" onClick={() => actions.unsnooze(ids)}>
@@ -105,7 +84,7 @@ export function RowActions({
           {del}
         </>
       )
-    case "todo":
+    case 'todo':
       return (
         <>
           <Btn text label="Xong" onClick={() => actions.markTodoDone(ids)}>
@@ -121,7 +100,7 @@ export function RowActions({
           {archive}
           {del}
           <Btn
-            label={email.unread ? "Đánh dấu đã đọc" : "Đánh dấu chưa đọc"}
+            label={email.unread ? 'Đánh dấu đã đọc' : 'Đánh dấu chưa đọc'}
             onClick={() => actions.markRead(ids, email.unread)}
           >
             {email.unread ? <MailOpen size={16} /> : <Mail size={16} />}

@@ -3,7 +3,7 @@ import { Search } from "lucide-react"
 import { Popover } from "@/shared/ui/Popover"
 import { Smile } from "lucide-react"
 
-const CATEGORIES: { label: string emojis: string[] }[] = [
+const CATEGORIES: { label: string; emojis: string[] }[] = [
   {
     label: "😀 Cảm xúc",
     emojis: [

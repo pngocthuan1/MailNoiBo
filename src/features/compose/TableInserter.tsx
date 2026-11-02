@@ -9,7 +9,7 @@ type Props = { onInsert: (rows: number, cols: number) => void }
 
 /** Bộ chọn bảng 5x5 (SO-11) */
 export function TableInserter({ onInsert }: Props) {
-  const [hover, setHover] = useState<{ r: number c: number } | null>(null)
+  const [hover, setHover] = useState<{ r: number; c: number } | null>(null)
 
   return (
     <Popover

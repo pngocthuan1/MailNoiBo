@@ -68,6 +68,18 @@ export function useRichEditor(onChange: (html: string) => void) {
   const insertHtml = useCallback(
     (html: string) => {
       restore()
+      if (!saved.current) {
+        if (ref.current) {
+          const sig = ref.current.querySelector(".sig-block")
+          if (sig) {
+            sig.insertAdjacentHTML("beforebegin", html)
+          } else {
+            ref.current.innerHTML += html
+          }
+          onChange(ref.current.innerHTML)
+        }
+        return
+      }
       document.execCommand("insertHTML", false, html)
       if (ref.current) onChange(ref.current.innerHTML)
     },

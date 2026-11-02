@@ -31,7 +31,7 @@ export function ComposeDemoSwitcher() {
     }
   }
 
-  const rows: { key: "sendFails" | "offline" | "uploadError" label: string }[] =
+  const rows: { key: "sendFails" | "offline" | "uploadError"; label: string }[] =
     [
       { key: "sendFails", label: "Gửi thư thất bại (lần kế tiếp)" },
       { key: "offline", label: "Ngoại tuyến" },

@@ -1,8 +1,8 @@
-import { Users } from "lucide-react"
-import { sharedMailboxes } from "@/mock-data"
-import { sharedUnassigned } from "@/shared/state/mailSelectors"
-import { useMailStore } from "@/shared/state/mailStore"
-import { SidebarItem } from "./SidebarItem"
+import { Users } from 'lucide-react'
+import { sharedMailboxes } from '@/mock-data'
+import { sharedUnassigned } from '@/shared/state/mailSelectors'
+import { useMailStore } from '@/shared/state/mailStore'
+import { SidebarItem } from './SidebarItem'
 
 export function SidebarSharedMailboxes({ collapsed }: { collapsed: boolean }) {
   const emails = useMailStore((st) => st.emails)

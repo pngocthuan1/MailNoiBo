@@ -1,6 +1,6 @@
-import { MoreVertical, RefreshCw } from "lucide-react"
-import { Popover } from "@/shared/ui/Popover"
-import { SelectAllControl, type SelectMode } from "./SelectAllControl"
+import { MoreVertical, RefreshCw } from 'lucide-react'
+import { Popover } from '@/shared/ui/Popover'
+import { SelectAllControl, type SelectMode } from './SelectAllControl'
 
 type Props = {
   total: number
@@ -12,14 +12,7 @@ type Props = {
 }
 
 /** Thanh công cụ khi chưa chọn thư (HT-03, HT-07). */
-export function ListToolbar({
-  total,
-  shown,
-  refreshing,
-  onSelect,
-  onRefresh,
-  onMarkAllRead,
-}: Props) {
+export function ListToolbar({ total, shown, refreshing, onSelect, onRefresh, onMarkAllRead }: Props) {
   return (
     <div className="flex h-12 items-center gap-1 border-b border-line px-2">
       <SelectAllControl state="none" onSelect={onSelect} />
@@ -30,7 +23,7 @@ export function ListToolbar({
         onClick={onRefresh}
         className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted hover:bg-hover hover:text-fg"
       >
-        <RefreshCw size={16} className={refreshing ? "animate-spin" : ""} />
+        <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
       </button>
       <Popover
         align="left"
@@ -61,7 +54,7 @@ export function ListToolbar({
         )}
       </Popover>
       <span className="ml-auto pr-2 text-xs text-muted">
-        {shown === 0 ? "0 thư" : `1–${shown} trong ${total}`}
+        {shown === 0 ? '0 thư' : `1–${shown} trong ${total}`}
       </span>
     </div>
   )

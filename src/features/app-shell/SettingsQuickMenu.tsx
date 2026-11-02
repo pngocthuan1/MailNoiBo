@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom"
-import { Check, Monitor, Moon, Settings, Sun } from "lucide-react"
-import { useUI, type ThemeChoice } from "@/shared/state/UIProvider"
-import { IconButton } from "@/shared/ui/IconButton"
-import { Popover } from "@/shared/ui/Popover"
+import { Link } from 'react-router-dom'
+import { Check, Monitor, Moon, Settings, Sun } from 'lucide-react'
+import { useUI, type ThemeChoice } from '@/shared/state/UIProvider'
+import { IconButton } from '@/shared/ui/IconButton'
+import { Popover } from '@/shared/ui/Popover'
 
-const themes: { id: ThemeChoice label: string icon: typeof Sun }[] = [
-  { id: "light", label: "Sáng", icon: Sun },
-  { id: "dark", label: "Tối", icon: Moon },
-  { id: "system", label: "Theo hệ thống", icon: Monitor },
+const themes: { id: ThemeChoice; label: string; icon: typeof Sun }[] = [
+  { id: 'light', label: 'Sáng', icon: Sun },
+  { id: 'dark', label: 'Tối', icon: Moon },
+  { id: 'system', label: 'Theo hệ thống', icon: Monitor },
 ]
 
 export function SettingsQuickMenu() {

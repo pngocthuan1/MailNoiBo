@@ -1,13 +1,7 @@
-import { ChevronsUpDown } from "lucide-react"
+import { ChevronsUpDown } from 'lucide-react'
 
 /** Nhiều thư cũ liền nhau gộp thành một dải, bấm để mở hết (DT-02). */
-export function HiddenMessagesBar({
-  count,
-  onExpand,
-}: {
-  count: number
-  onExpand: () => void
-}) {
+export function HiddenMessagesBar({ count, onExpand }: { count: number; onExpand: () => void }) {
   return (
     <button
       type="button"

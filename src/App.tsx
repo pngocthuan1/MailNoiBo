@@ -1,7 +1,7 @@
-import { RouterProvider } from "react-router-dom"
-import { router } from "@/app/routes"
-import { UIProvider } from "@/shared/state/UIProvider"
-import { SnackbarProvider } from "@/shared/ui/Snackbar"
+import { RouterProvider } from 'react-router-dom'
+import { router } from '@/app/routes'
+import { UIProvider } from '@/shared/state/UIProvider'
+import { SnackbarProvider } from '@/shared/ui/Snackbar'
 
 export default function App() {
   return (

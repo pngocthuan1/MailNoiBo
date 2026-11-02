@@ -1,5 +1,5 @@
-import { WifiOff } from "lucide-react"
-import { useOnlineStatus } from "@/shared/hooks/useOnlineStatus"
+import { WifiOff } from 'lucide-react'
+import { useOnlineStatus } from '@/shared/hooks/useOnlineStatus'
 
 export function OfflineBanner() {
   const online = useOnlineStatus()

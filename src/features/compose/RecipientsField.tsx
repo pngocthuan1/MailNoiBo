@@ -1,16 +1,10 @@
-import { useMemo, useRef, useState, type ReactNode } from "react"
-import { Users } from "lucide-react"
-import { getDepartment, type ComposeRecipient } from "@/mock-data"
-import { Avatar } from "@/shared/ui/Avatar"
-import { GroupPill } from "./GroupPill"
-import { RecipientPill } from "./RecipientPill"
-import {
-  groupLabel,
-  groupRecipient,
-  personRecipient,
-  recipientFromText,
-  suggest,
-} from "./recipients"
+import { useMemo, useRef, useState, type ReactNode } from 'react'
+import { Users } from 'lucide-react'
+import { getDepartment, type ComposeRecipient } from '@/mock-data'
+import { Avatar } from '@/shared/ui/Avatar'
+import { GroupPill } from './GroupPill'
+import { RecipientPill } from './RecipientPill'
+import { groupLabel, groupRecipient, personRecipient, recipientFromText, suggest } from './recipients'
 
 type Props = {
   label: string
@@ -21,14 +15,8 @@ type Props = {
 }
 
 /** Ô nhập người nhận: thẻ người/nhóm, gợi ý liên hệ thường dùng, phòng ban và nhóm. */
-export function RecipientsField({
-  label,
-  value,
-  onChange,
-  trailing,
-  autoFocus,
-}: Props) {
-  const [text, setText] = useState("")
+export function RecipientsField({ label, value, onChange, trailing, autoFocus }: Props) {
+  const [text, setText] = useState('')
   const [focused, setFocused] = useState(false)
   const [active, setActive] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -41,25 +29,18 @@ export function RecipientsField({
     const next = [...value]
     for (const p of parts) {
       const r = recipientFromText(p)
-      const dup =
-        r.kind === "person" &&
-        next.some((x) => x.kind === "person" && x.email === r.email)
+      const dup = r.kind === 'person' && next.some((x) => x.kind === 'person' && x.email === r.email)
       if (!dup) next.push(r)
     }
     onChange(next)
-    setText("")
+    setText('')
   }
 
   const pick = (i: number) => {
     const s = suggestions[i]
     if (!s) return
-    onChange([
-      ...value,
-      s.type === "person"
-        ? personRecipient(s.employee)
-        : groupRecipient(s.group),
-    ])
-    setText("")
+    onChange([...value, s.type === 'person' ? personRecipient(s.employee) : groupRecipient(s.group)])
+    setText('')
     setActive(0)
     inputRef.current?.focus()
   }
@@ -70,7 +51,7 @@ export function RecipientsField({
     const seen = new Set<string>()
     onChange(
       next.filter((r) => {
-        if (r.kind !== "person") return true
+        if (r.kind !== 'person') return true
         if (seen.has(r.email)) return false
         seen.add(r.email)
         return true
@@ -91,12 +72,8 @@ export function RecipientsField({
       <span className="w-10 shrink-0 pt-1.5 text-muted">{label}</span>
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1 py-0.5">
         {value.map((r, i) =>
-          r.kind === "person" ? (
-            <RecipientPill
-              key={`${r.email}-${i}`}
-              {...r}
-              onRemove={() => replaceAt(i, [])}
-            />
+          r.kind === 'person' ? (
+            <RecipientPill key={`${r.email}-${i}`} {...r} onRemove={() => replaceAt(i, [])} />
           ) : (
             <GroupPill
               key={r.id}
@@ -121,22 +98,20 @@ export function RecipientsField({
             commitText()
           }}
           onKeyDown={(e) => {
-            if (e.key === "ArrowDown" && suggestions.length) {
+            if (e.key === 'ArrowDown' && suggestions.length) {
               e.preventDefault()
               setActive((a) => (a + 1) % suggestions.length)
-            } else if (e.key === "ArrowUp" && suggestions.length) {
+            } else if (e.key === 'ArrowUp' && suggestions.length) {
               e.preventDefault()
-              setActive(
-                (a) => (a - 1 + suggestions.length) % suggestions.length,
-              )
-            } else if (e.key === "Enter" || e.key === "," || e.key === ";") {
+              setActive((a) => (a - 1 + suggestions.length) % suggestions.length)
+            } else if (e.key === 'Enter' || e.key === ',' || e.key === ';') {
               e.preventDefault()
-              if (suggestions.length && e.key === "Enter") pick(active)
+              if (suggestions.length && e.key === 'Enter') pick(active)
               else commitText()
-            } else if (e.key === "Tab" && suggestions.length && text.trim()) {
+            } else if (e.key === 'Tab' && suggestions.length && text.trim()) {
               e.preventDefault()
               pick(active)
-            } else if (e.key === "Backspace" && !text && value.length) {
+            } else if (e.key === 'Backspace' && !text && value.length) {
               onChange(value.slice(0, -1))
             }
           }}
@@ -153,7 +128,7 @@ export function RecipientsField({
         >
           {suggestions.map((s, i) => (
             <li
-              key={s.type === "person" ? s.employee.id : s.group.id}
+              key={s.type === 'person' ? s.employee.id : s.group.id}
               role="option"
               aria-selected={i === active}
               onMouseDown={(e) => {
@@ -161,18 +136,15 @@ export function RecipientsField({
                 pick(i)
               }}
               onMouseEnter={() => setActive(i)}
-              className={`flex cursor-pointer items-center gap-3 px-3 py-1.5 ${
-                i === active ? "bg-hover" : ""
-              }`}
+              className={`flex cursor-pointer items-center gap-3 px-3 py-1.5 ${i === active ? 'bg-hover' : ''}`}
             >
-              {s.type === "person" ? (
+              {s.type === 'person' ? (
                 <>
                   <Avatar name={s.employee.name} size={32} />
                   <div className="min-w-0">
                     <div className="truncate text-sm">{s.employee.name}</div>
                     <div className="truncate text-xs text-muted">
-                      {s.employee.email} ·{" "}
-                      {getDepartment(s.employee.departmentId)?.name}
+                      {s.employee.email} · {getDepartment(s.employee.departmentId)?.name}
                     </div>
                   </div>
                 </>
@@ -182,14 +154,8 @@ export function RecipientsField({
                     <Users size={16} />
                   </span>
                   <div className="min-w-0">
-                    <div className="truncate text-sm">
-                      {groupLabel(s.group)}
-                    </div>
-                    <div className="text-xs text-muted">
-                      {s.group.kind === "department"
-                        ? "Phòng ban"
-                        : "Nhóm liên hệ"}
-                    </div>
+                    <div className="truncate text-sm">{groupLabel(s.group)}</div>
+                    <div className="text-xs text-muted">{s.group.kind === 'department' ? 'Phòng ban' : 'Nhóm liên hệ'}</div>
                   </div>
                 </>
               )}

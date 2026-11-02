@@ -1,21 +1,17 @@
-import type { ButtonHTMLAttributes } from "react"
+import type { ButtonHTMLAttributes } from 'react'
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "ghost" | "text" | "danger"
+  variant?: 'primary' | 'ghost' | 'text' | 'danger'
 }
 
 const variants = {
-  primary: "bg-accent text-on-accent hover:bg-accent-hover",
-  ghost: "border border-line text-fg hover:bg-hover",
-  text: "text-accent hover:bg-accent-soft",
-  danger: "bg-danger text-white hover:opacity-90",
+  primary: 'bg-accent text-on-accent hover:bg-accent-hover',
+  ghost: 'border border-line text-fg hover:bg-hover',
+  text: 'text-accent hover:bg-accent-soft',
+  danger: 'bg-danger text-white hover:opacity-90',
 }
 
-export function Button({
-  variant = "primary",
-  className = "",
-  ...rest
-}: Props) {
+export function Button({ variant = 'primary', className = '', ...rest }: Props) {
   return (
     <button
       type="button"

@@ -1,13 +1,5 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react"
-import { X } from "lucide-react"
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
+import { X } from 'lucide-react'
 
 type SnackOptions = {
   message: string
@@ -22,13 +14,11 @@ type SnackOptions = {
 
 type SnackItem = SnackOptions & { id: number }
 
-const SnackbarContext = createContext<{
-  show: (opts: SnackOptions) => void
-} | null>(null)
+const SnackbarContext = createContext<{ show: (opts: SnackOptions) => void } | null>(null)
 
 export function useSnackbar() {
   const ctx = useContext(SnackbarContext)
-  if (!ctx) throw new Error("useSnackbar phải nằm trong SnackbarProvider")
+  if (!ctx) throw new Error('useSnackbar phải nằm trong SnackbarProvider')
   return ctx
 }
 
@@ -46,10 +36,7 @@ export function SnackbarProvider({ children }: { children: ReactNode }) {
     window.clearTimeout(timer.current)
     const id = ++idRef.current
     setItem({ ...opts, id })
-    timer.current = window.setTimeout(
-      () => setItem((cur) => (cur?.id === id ? null : cur)),
-      opts.duration ?? 5000,
-    )
+    timer.current = window.setTimeout(() => setItem((cur) => (cur?.id === id ? null : cur)), opts.duration ?? 5000)
   }, [])
 
   useEffect(() => () => window.clearTimeout(timer.current), [])
@@ -57,10 +44,7 @@ export function SnackbarProvider({ children }: { children: ReactNode }) {
   return (
     <SnackbarContext.Provider value={{ show }}>
       {children}
-      <div
-        className="pointer-events-none fixed bottom-6 left-6 z-[60]"
-        aria-live="polite"
-      >
+      <div className="pointer-events-none fixed bottom-6 left-6 z-[60]" aria-live="polite">
         {item && (
           <div
             key={item.id}
@@ -72,9 +56,7 @@ export function SnackbarProvider({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 className="h-8 cursor-pointer rounded px-2 font-semibold hover:bg-white/10"
-                style={{
-                  color: "color-mix(in srgb, var(--accent) 70%, white)",
-                }}
+                style={{ color: 'color-mix(in srgb, var(--accent) 70%, white)' }}
                 onClick={() => {
                   item.onAction?.()
                   dismiss()
@@ -87,9 +69,7 @@ export function SnackbarProvider({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 className="h-8 cursor-pointer rounded px-2 font-semibold hover:bg-white/10"
-                style={{
-                  color: "color-mix(in srgb, var(--accent) 70%, white)",
-                }}
+                style={{ color: 'color-mix(in srgb, var(--accent) 70%, white)' }}
                 onClick={() => {
                   item.onSecondary?.()
                   dismiss()

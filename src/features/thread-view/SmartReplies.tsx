@@ -1,18 +1,9 @@
-import { Sparkles } from "lucide-react"
+import { Sparkles } from 'lucide-react'
 
 /** Ba câu trả lời nhanh nằm ngay trên ô trả lời (DT-10). */
-export function SmartReplies({
-  replies,
-  onPick,
-}: {
-  replies: string[]
-  onPick: (text: string) => void
-}) {
+export function SmartReplies({ replies, onPick }: { replies: string[]; onPick: (text: string) => void }) {
   return (
-    <div
-      className="no-print flex flex-wrap items-center gap-2"
-      aria-label="Gợi ý trả lời nhanh"
-    >
+    <div className="no-print flex flex-wrap items-center gap-2" aria-label="Gợi ý trả lời nhanh">
       <Sparkles size={14} className="text-accent" />
       {replies.slice(0, 3).map((r) => (
         <button

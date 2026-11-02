@@ -10,7 +10,7 @@ type Props = {
   onClose: () => void
 }
 
-const EXPIRY_OPTIONS: { label: string ms: number | null }[] = [
+const EXPIRY_OPTIONS: { label: string; ms: number | null }[] = [
   { label: "1 ngày", ms: 24 * 3600 * 1000 },
   { label: "1 tuần", ms: 7 * 24 * 3600 * 1000 },
   { label: "1 tháng", ms: 30 * 24 * 3600 * 1000 },

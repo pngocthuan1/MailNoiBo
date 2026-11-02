@@ -1,11 +1,11 @@
-import { Users, X } from "lucide-react"
-import type { ComposeRecipient } from "@/mock-data"
-import { Avatar } from "@/shared/ui/Avatar"
-import { Popover } from "@/shared/ui/Popover"
-import { personRecipient } from "./recipients"
-import { employees } from "@/mock-data"
+import { Users, X } from 'lucide-react'
+import type { ComposeRecipient } from '@/mock-data'
+import { Avatar } from '@/shared/ui/Avatar'
+import { Popover } from '@/shared/ui/Popover'
+import { personRecipient } from './recipients'
+import { employees } from '@/mock-data'
 
-type Group = Extract<ComposeRecipient, { kind: "group" }>
+type Group = Extract<ComposeRecipient, { kind: 'group' }>
 type Props = {
   group: Group
   /** `null` khi nhóm không còn thành viên hoặc bị xóa */
@@ -29,9 +29,7 @@ export function GroupPill({ group, onChange, onExpand }: Props) {
           >
             <Users size={14} className="text-accent" aria-hidden />
             <span className="max-w-48 truncate">{group.name}</span>
-            <span className="rounded-full bg-surface px-1.5 text-[11px] text-muted">
-              {group.members.length}
-            </span>
+            <span className="rounded-full bg-surface px-1.5 text-[11px] text-muted">{group.members.length}</span>
           </button>
         )}
       >
@@ -42,10 +40,7 @@ export function GroupPill({ group, onChange, onExpand }: Props) {
             </div>
             <ul className="max-h-56 overflow-y-auto py-1">
               {group.members.map((m) => (
-                <li
-                  key={m.email}
-                  className="flex items-center gap-2 px-3 py-1.5"
-                >
+                <li key={m.email} className="flex items-center gap-2 px-3 py-1.5">
                   <Avatar name={m.name} size={24} />
                   <div className="min-w-0 flex-1">
                     <div className="truncate text-sm">{m.name}</div>
@@ -55,9 +50,7 @@ export function GroupPill({ group, onChange, onExpand }: Props) {
                     type="button"
                     aria-label={`Xóa ${m.name} khỏi nhóm`}
                     onClick={() => {
-                      const members = group.members.filter(
-                        (x) => x.email !== m.email,
-                      )
+                      const members = group.members.filter((x) => x.email !== m.email)
                       onChange(members.length ? { ...group, members } : null)
                       if (!members.length) close()
                     }}
@@ -75,14 +68,7 @@ export function GroupPill({ group, onChange, onExpand }: Props) {
                   onExpand(
                     group.members.map((m) => {
                       const e = employees.find((x) => x.email === m.email)
-                      return e
-                        ? personRecipient(e)
-                        : {
-                            kind: "person" as const,
-                            email: m.email,
-                            name: m.name,
-                            valid: true,
-                          }
+                      return e ? personRecipient(e) : { kind: 'person' as const, email: m.email, name: m.name, valid: true }
                     }),
                   )
                   close()

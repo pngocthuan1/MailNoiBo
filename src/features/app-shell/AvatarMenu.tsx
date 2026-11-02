@@ -1,12 +1,11 @@
-import { Link, useNavigate } from "react-router-dom"
-import { Check, LogOut, Settings, UserCircle, UserPlus } from "lucide-react"
-import { accounts, currentUser } from "@/mock-data"
-import { Avatar } from "@/shared/ui/Avatar"
-import { Popover } from "@/shared/ui/Popover"
-import { useSnackbar } from "@/shared/ui/Snackbar"
+import { Link, useNavigate } from 'react-router-dom'
+import { Check, LogOut, Settings, UserCircle, UserPlus } from 'lucide-react'
+import { accounts, currentUser } from '@/mock-data'
+import { Avatar } from '@/shared/ui/Avatar'
+import { Popover } from '@/shared/ui/Popover'
+import { useSnackbar } from '@/shared/ui/Snackbar'
 
-const rowClass =
-  "flex h-10 w-full cursor-pointer items-center gap-3 px-4 text-left hover:bg-hover"
+const rowClass = 'flex h-10 w-full cursor-pointer items-center gap-3 px-4 text-left hover:bg-hover'
 
 export function AvatarMenu() {
   const navigate = useNavigate()
@@ -22,11 +21,7 @@ export function AvatarMenu() {
           onClick={toggle}
           className="ml-1 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:bg-hover"
         >
-          <Avatar
-            name={currentUser.name}
-            size={32}
-            status={currentUser.status}
-          />
+          <Avatar name={currentUser.name} size={32} status={currentUser.status} />
         </button>
       )}
     >
@@ -40,9 +35,7 @@ export function AvatarMenu() {
             </div>
           </div>
           <div className="border-t border-line py-2">
-            <p className="px-4 pb-1 text-xs font-medium text-muted">
-              Chuyển tài khoản
-            </p>
+            <p className="px-4 pb-1 text-xs font-medium text-muted">Chuyển tài khoản</p>
             {accounts.map((a) => (
               <button
                 key={a.id}
@@ -50,20 +43,15 @@ export function AvatarMenu() {
                 className={rowClass}
                 onClick={() => {
                   close()
-                  if (a.id !== currentUser.id)
-                    snackbar.show({ message: `Đã chuyển sang ${a.email}` })
+                  if (a.id !== currentUser.id) snackbar.show({ message: `Đã chuyển sang ${a.email}` })
                 }}
               >
                 <Avatar name={a.name} size={24} />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate">{a.name}</span>
-                  <span className="block truncate text-xs text-muted">
-                    {a.email}
-                  </span>
+                  <span className="block truncate text-xs text-muted">{a.email}</span>
                 </span>
-                {a.id === currentUser.id && (
-                  <Check size={16} className="text-accent" />
-                )}
+                {a.id === currentUser.id && <Check size={16} className="text-accent" />}
               </button>
             ))}
             <button
@@ -71,9 +59,7 @@ export function AvatarMenu() {
               className={rowClass}
               onClick={() => {
                 close()
-                snackbar.show({
-                  message: "Tính năng thêm tài khoản sẽ có ở bước sau",
-                })
+                snackbar.show({ message: 'Tính năng thêm tài khoản sẽ có ở bước sau' })
               }}
             >
               <UserPlus size={16} className="text-muted" />
@@ -81,11 +67,7 @@ export function AvatarMenu() {
             </button>
           </div>
           <div className="border-t border-line pt-2">
-            <Link
-              to={`/contacts/${currentUser.id}`}
-              onClick={close}
-              className={rowClass}
-            >
+            <Link to={`/contacts/${currentUser.id}`} onClick={close} className={rowClass}>
               <UserCircle size={16} className="text-muted" />
               Hồ sơ
             </Link>
@@ -98,7 +80,7 @@ export function AvatarMenu() {
               className={rowClass}
               onClick={() => {
                 close()
-                navigate("/login")
+                navigate('/login')
               }}
             >
               <LogOut size={16} className="text-muted" />

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Calendar, ChevronDown } from "lucide-react"
 import { Popover } from "@/shared/ui/Popover"
 
-export type ScheduleTime = { ts: number label: string }
+export type ScheduleTime = { ts: number; label: string }
 
 function getNextMonday8am(): number {
   const d = new Date()

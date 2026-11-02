@@ -1,27 +1,25 @@
-import { useEffect, useRef, useState, type FormEvent } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
-import { Clock, Search, SlidersHorizontal, X } from "lucide-react"
-import { recentSearches } from "@/mock-data"
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Clock, Search, SlidersHorizontal, X } from 'lucide-react'
+import { recentSearches } from '@/mock-data'
 
 export function HeaderSearch() {
   const navigate = useNavigate()
   const location = useLocation()
-  const [text, setText] = useState("")
+  const [text, setText] = useState('')
   const [open, setOpen] = useState(false)
   const [history, setHistory] = useState(recentSearches)
   const ref = useRef<HTMLFormElement>(null)
 
   // Giữ từ khóa trong ô khi ở trang tìm kiếm.
   useEffect(() => {
-    if (location.pathname === "/search")
-      setText(new URLSearchParams(location.search).get("q") ?? "")
+    if (location.pathname === '/search') setText(new URLSearchParams(location.search).get('q') ?? '')
   }, [location.pathname, location.search])
 
   useEffect(() => {
-    const onDown = (e: MouseEvent) =>
-      !ref.current?.contains(e.target as Node) && setOpen(false)
-    document.addEventListener("mousedown", onDown)
-    return () => document.removeEventListener("mousedown", onDown)
+    const onDown = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpen(false)
+    document.addEventListener('mousedown', onDown)
+    return () => document.removeEventListener('mousedown', onDown)
   }, [])
 
   const run = (q: string) => {
@@ -41,11 +39,11 @@ export function HeaderSearch() {
       role="search"
       onSubmit={submit}
       className="relative mx-auto w-full max-w-[720px] min-w-0 flex-1"
-      onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+      onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}
     >
       <div
         className={`flex h-10 items-center gap-1 rounded-full pr-1 pl-4 transition-colors ${
-          open ? "bg-surface shadow-pop" : "bg-surface-2"
+          open ? 'bg-surface shadow-pop' : 'bg-surface-2'
         }`}
       >
         <Search size={18} className="shrink-0 text-muted" />
@@ -63,7 +61,7 @@ export function HeaderSearch() {
             type="button"
             aria-label="Xóa từ khóa"
             className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-muted hover:bg-hover"
-            onClick={() => setText("")}
+            onClick={() => setText('')}
           >
             <X size={16} />
           </button>
@@ -79,9 +77,7 @@ export function HeaderSearch() {
       </div>
       {open && !text && history.length > 0 && (
         <div className="animate-slide-up absolute top-full right-0 left-0 z-50 mt-2 overflow-hidden rounded-xl border border-line bg-surface py-2 shadow-pop">
-          <p className="px-4 pb-1 text-xs font-medium text-muted">
-            Tìm kiếm gần đây
-          </p>
+          <p className="px-4 pb-1 text-xs font-medium text-muted">Tìm kiếm gần đây</p>
           <ul>
             {history.map((h) => (
               <li key={h} className="flex items-center hover:bg-hover">

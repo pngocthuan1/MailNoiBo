@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom"
-import { AnnouncementBanner } from "@/features/app-shell/AnnouncementBanner"
-import { Header } from "@/features/app-shell/Header"
-import { OfflineBanner } from "@/features/app-shell/OfflineBanner"
-import { Sidebar } from "@/features/app-shell/Sidebar"
-import { ComposeContainer } from "@/features/compose/ComposeContainer"
-import { MailShortcuts } from "@/features/mail-list/MailShortcuts"
-import { ComposeProvider } from "@/features/compose/ComposeProvider"
+import { Outlet } from 'react-router-dom'
+import { AnnouncementBanner } from '@/features/app-shell/AnnouncementBanner'
+import { Header } from '@/features/app-shell/Header'
+import { OfflineBanner } from '@/features/app-shell/OfflineBanner'
+import { Sidebar } from '@/features/app-shell/Sidebar'
+import { ComposeContainer } from '@/features/compose/ComposeContainer'
+import { MailShortcuts } from '@/features/mail-list/MailShortcuts'
+import { ComposeProvider } from '@/features/compose/ComposeProvider'
 
 export function AppShell() {
   return (

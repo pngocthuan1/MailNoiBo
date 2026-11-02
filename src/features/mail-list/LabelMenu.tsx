@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react"
-import { Plus, Tag } from "lucide-react"
-import type { Email } from "@/mock-data"
-import { LabelDot } from "@/shared/ui/LabelDot"
-import { Popover } from "@/shared/ui/Popover"
-import { useAllLabels } from "@/shared/state/mailStore"
+import { useMemo, useState } from 'react'
+import { Plus, Tag } from 'lucide-react'
+import type { Email } from '@/mock-data'
+import { LabelDot } from '@/shared/ui/LabelDot'
+import { Popover } from '@/shared/ui/Popover'
+import { useAllLabels } from '@/shared/state/mailStore'
 
 type Props = {
   /** Các thư đang được chọn */
@@ -12,19 +12,13 @@ type Props = {
   onCreate: (name: string) => void
 }
 
-function Check({
-  state,
-  onChange,
-}: {
-  state: "all" | "some" | "none"
-  onChange: () => void
-}) {
+function Check({ state, onChange }: { state: 'all' | 'some' | 'none'; onChange: () => void }) {
   return (
     <input
       type="checkbox"
-      checked={state === "all"}
+      checked={state === 'all'}
       ref={(el) => {
-        if (el) el.indeterminate = state === "some"
+        if (el) el.indeterminate = state === 'some'
       }}
       onChange={onChange}
       className="h-4 w-4 cursor-pointer accent-[var(--accent)]"
@@ -35,7 +29,7 @@ function Check({
 /** Menu gắn nhãn: ô tìm, ô tích (tích một phần khi chỉ một số thư có nhãn), tạo nhãn mới (NH-02). */
 export function LabelMenu({ targets, onToggle, onCreate }: Props) {
   const labels = useAllLabels()
-  const [q, setQ] = useState("")
+  const [q, setQ] = useState('')
   const [creating, setCreating] = useState(false)
 
   const path = (id: string): string => {
@@ -43,10 +37,7 @@ export function LabelMenu({ targets, onToggle, onCreate }: Props) {
     return l.parentId ? `${path(l.parentId)} / ${l.name}` : l.name
   }
   const shown = useMemo(
-    () =>
-      labels.filter((l) =>
-        path(l.id).toLowerCase().includes(q.trim().toLowerCase()),
-      ),
+    () => labels.filter((l) => path(l.id).toLowerCase().includes(q.trim().toLowerCase())),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [labels, q],
   )
@@ -69,9 +60,7 @@ export function LabelMenu({ targets, onToggle, onCreate }: Props) {
     >
       {(close) => (
         <div className="py-2">
-          <p className="px-4 pb-1 text-xs font-medium text-muted">
-            Gắn nhãn cho {targets.length} thư
-          </p>
+          <p className="px-4 pb-1 text-xs font-medium text-muted">Gắn nhãn cho {targets.length} thư</p>
           <div className="px-3 pb-2">
             <input
               value={q}
@@ -82,22 +71,14 @@ export function LabelMenu({ targets, onToggle, onCreate }: Props) {
             />
           </div>
           <ul className="max-h-56 overflow-y-auto">
-            {shown.length === 0 && (
-              <li className="px-4 py-2 text-muted">Không có nhãn phù hợp.</li>
-            )}
+            {shown.length === 0 && <li className="px-4 py-2 text-muted">Không có nhãn phù hợp.</li>}
             {shown.map((l) => {
-              const count = targets.filter((t) =>
-                t.labelIds.includes(l.id),
-              ).length
-              const state =
-                count === 0 ? "none" : count === targets.length ? "all" : "some"
+              const count = targets.filter((t) => t.labelIds.includes(l.id)).length
+              const state = count === 0 ? 'none' : count === targets.length ? 'all' : 'some'
               return (
                 <li key={l.id}>
                   <label className="flex h-9 cursor-pointer items-center gap-3 px-4 hover:bg-hover">
-                    <Check
-                      state={state}
-                      onChange={() => onToggle(l.id, state !== "all")}
-                    />
+                    <Check state={state} onChange={() => onToggle(l.id, state !== 'all')} />
                     <LabelDot color={l.color} />
                     <span className="truncate">{path(l.id)}</span>
                   </label>
@@ -126,10 +107,7 @@ export function LabelMenu({ targets, onToggle, onCreate }: Props) {
                   maxLength={40}
                   className="h-8 min-w-0 flex-1 rounded-lg border border-line bg-surface px-3 outline-none focus:border-accent"
                 />
-                <button
-                  type="submit"
-                  className="h-8 cursor-pointer rounded px-2 font-medium text-accent hover:bg-accent-soft"
-                >
+                <button type="submit" className="h-8 cursor-pointer rounded px-2 font-medium text-accent hover:bg-accent-soft">
                   Tạo
                 </button>
               </form>

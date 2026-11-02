@@ -1,6 +1,6 @@
-import type { Email, Message } from "@/mock-data"
+import type { Email, Message } from '@/mock-data'
 
-export type ComposerMode = "reply" | "replyAll" | "forward"
+export type ComposerMode = 'reply' | 'replyAll' | 'forward'
 
 /** Ngữ cảnh dùng chung cho các thư trong chuỗi. */
 export type MessageCtx = {

@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react"
+import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string
@@ -6,12 +6,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 }
 
 /** Nút biểu tượng, vùng bấm tối thiểu 32px. */
-export function IconButton({
-  label,
-  children,
-  className = "",
-  ...rest
-}: Props) {
+export function IconButton({ label, children, className = '', ...rest }: Props) {
   return (
     <button
       type="button"

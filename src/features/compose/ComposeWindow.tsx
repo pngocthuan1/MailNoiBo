@@ -103,6 +103,7 @@ export function ComposeWindow({ draft }: { draft: ComposeDraft }) {
   const [showTplManager, setShowTplManager] = useState(false)
   const [showSaveTpl, setShowSaveTpl] = useState(false)
   const [showConfidentialDialog, setShowConfidentialDialog] = useState(false)
+  const currentSig = useSignatureStore((st) => st.signatures.find((item) => item.id === draft.signatureId))
 
   const latest = useRef(draft)
   latest.current = draft
@@ -121,14 +122,18 @@ export function ComposeWindow({ draft }: { draft: ComposeDraft }) {
       const sigState = useSignatureStore.getState()
       const defId = draft.mode ? sigState.defaultReplyId : sigState.defaultNewId
       if (defId) {
-        const sig = sigState.signatures.find((s) => s.id === defId)
-        if (sig && !draft.bodyHtml.includes("sig-block")) {
-          const sigHtml = `<div class="sig-block" data-sig-id="${sig.id}">${sig.html}</div>`
-          const nextHtml = draft.bodyHtml
-            ? `${draft.bodyHtml}${sigHtml}`
-            : `<p></p>${sigHtml}`
-          edit(draft.id, { bodyHtml: nextHtml, signatureId: defId })
-          if (editor.ref.current) editor.ref.current.innerHTML = nextHtml
+        if (!draft.mode) {
+          const sig = sigState.signatures.find((s) => s.id === defId)
+          if (sig && !draft.bodyHtml.includes("sig-block")) {
+            const sigHtml = `<div class="sig-block" data-sig-id="${sig.id}">${sig.html}</div>`
+            const nextHtml = draft.bodyHtml
+              ? `${draft.bodyHtml}${sigHtml}`
+              : `<p></p>${sigHtml}`
+            edit(draft.id, { bodyHtml: nextHtml, signatureId: defId })
+            if (editor.ref.current) editor.ref.current.innerHTML = nextHtml
+          } else {
+            edit(draft.id, { signatureId: defId })
+          }
         } else {
           edit(draft.id, { signatureId: defId })
         }
@@ -141,6 +146,10 @@ export function ComposeWindow({ draft }: { draft: ComposeDraft }) {
 
   // Đổi chữ ký (SO-09)
   const applySignature = (sigId: string | null) => {
+    if (draft.mode) {
+      edit(draft.id, { signatureId: sigId })
+      return
+    }
     const currentHtml = latest.current.bodyHtml
     const parser = new DOMParser()
     const doc = parser.parseFromString(currentHtml, "text/html")
@@ -239,7 +248,7 @@ export function ComposeWindow({ draft }: { draft: ComposeDraft }) {
     return () => window.clearInterval(t)
   }, [uploading, update])
 
-  const addFiles = (files: { name: string size: number }[]) => {
+  const addFiles = (files: { name: string; size: number }[]) => {
     if (!files.length) return
     edit(draft.id, {
       attachments: [...latest.current.attachments, ...buildAttachments(files)],
@@ -433,12 +442,15 @@ export function ComposeWindow({ draft }: { draft: ComposeDraft }) {
     )
       return setDialog("forgot-attachment")
 
+    const resolvedBody = d.mode && currentSig
+      ? `${d.bodyHtml}<div class="sig-block" data-sig-id="${currentSig.id}">${currentSig.html}</div>`
+      : d.bodyHtml
     doSendWithHold({
       to: d.to,
       cc: d.cc,
       bcc: d.bcc,
       subject: d.subject,
-      bodyHtml: d.bodyHtml,
+      bodyHtml: resolvedBody,
       quotedHtml: d.quotedHtml,
       attachments: d.attachments,
       replyThreadId: d.replyThreadId,
@@ -682,6 +694,14 @@ export function ComposeWindow({ draft }: { draft: ComposeDraft }) {
                     <SafeHtml html={draft.quotedHtml} onLinkClick={() => {}} />
                   </div>
                 )}
+              </div>
+            )}
+            {draft.mode && currentSig && (
+              <div
+                className="sig-block border-t border-line/40 px-3 pt-2 pb-3 text-xs text-muted"
+                data-sig-id={currentSig.id}
+              >
+                <SafeHtml html={currentSig.html} onLinkClick={() => {}} />
               </div>
             )}
             <AttachmentCards

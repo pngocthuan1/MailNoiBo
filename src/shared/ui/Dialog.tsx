@@ -1,5 +1,5 @@
-import { useEffect, type ReactNode } from "react"
-import { X } from "lucide-react"
+import { useEffect, type ReactNode } from 'react'
+import { X } from 'lucide-react'
 
 type Props = {
   title: string
@@ -9,24 +9,15 @@ type Props = {
   width?: number
 }
 
-export function Dialog({
-  title,
-  onClose,
-  children,
-  footer,
-  width = 400,
-}: Props) {
+export function Dialog({ title, onClose, children, footer, width = 400 }: Props) {
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose()
-    document.addEventListener("keydown", onKey)
-    return () => document.removeEventListener("keydown", onKey)
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
   }, [onClose])
 
   return (
-    <div
-      className="fixed inset-0 z-[70] flex items-center justify-center bg-black/40 p-4"
-      onMouseDown={onClose}
-    >
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/40 p-4" onMouseDown={onClose}>
       <div
         role="dialog"
         aria-modal="true"
@@ -47,9 +38,7 @@ export function Dialog({
           </button>
         </div>
         <div className="px-6 pb-4">{children}</div>
-        {footer && (
-          <div className="flex justify-end gap-2 px-6 pb-4">{footer}</div>
-        )}
+        {footer && <div className="flex justify-end gap-2 px-6 pb-4">{footer}</div>}
       </div>
     </div>
   )

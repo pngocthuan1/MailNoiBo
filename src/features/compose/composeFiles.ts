@@ -1,13 +1,11 @@
-import type { ComposeAttachment } from "@/mock-data"
-import { composeFileKind } from "@/shared/state/mailStore"
-import { setComposeDemo, useComposeDemoStore } from "./composeDemoStore"
+import type { ComposeAttachment } from '@/mock-data'
+import { composeFileKind } from '@/shared/state/mailStore'
+import { setComposeDemo, useComposeDemoStore } from './composeDemoStore'
 
 export const MAX_FILE_SIZE = 25 * 1024 * 1024
 
 /** Tạo thẻ tệp đính kèm: tệp quá 25 MB lỗi ngay, các tệp khác sẽ được mô phỏng tải lên. */
-export function buildAttachments(
-  files: { name: string size: number }[],
-): ComposeAttachment[] {
+export function buildAttachments(files: { name: string; size: number }[]): ComposeAttachment[] {
   let failNext = useComposeDemoStore.getState().uploadError
   return files.map((f, i) => {
     const tooBig = f.size > MAX_FILE_SIZE
@@ -22,8 +20,8 @@ export function buildAttachments(
       size: f.size,
       kind: composeFileKind(f.name),
       progress: 0,
-      status: tooBig ? "error" : "uploading",
-      error: tooBig ? "Tệp vượt quá giới hạn 25 MB" : undefined,
+      status: tooBig ? 'error' : 'uploading',
+      error: tooBig ? 'Tệp vượt quá giới hạn 25 MB' : undefined,
       willFail,
     }
   })

@@ -1,6 +1,6 @@
 // Toàn bộ dữ liệu giả lập của ứng dụng (không có backend).
 
-export type Department = { id: string name: string }
+export type Department = { id: string; name: string }
 
 export type Employee = {
   id: string
@@ -22,9 +22,9 @@ export type Label = {
 
 export type FolderId = "inbox" | "starred" | "snoozed" | "important" | "sent" | "drafts" | "scheduled" | "todo" | "spam" | "trash"
 
-export type Folder = { id: FolderId name: string }
+export type Folder = { id: FolderId; name: string }
 
-export type SharedMailbox = { id: string name: string email: string }
+export type SharedMailbox = { id: string; name: string; email: string }
 
 export type MailCategory = "primary" | "social" | "promo"
 
@@ -93,7 +93,7 @@ export type ComposeRecipient = {
   kind: "group"
   id: string
   name: string
-  members: { name: string email: string }[]
+  members: { name: string; email: string }[]
 }
 
 export type ComposeAttachment = {
@@ -1120,7 +1120,7 @@ export const emails: Email[] = seeds.map(
 // tạo tự động từ dòng thư (xem features/thread-view/getMessages.ts).
 // ---------------------------------------------------------------------------
 
-export type Person = { name: string email: string }
+export type Person = { name: string; email: string }
 
 export type Attachment = {
   id: string
@@ -1149,12 +1149,12 @@ export type Message = {
   translationVi?: string
   unread?: boolean
   /** Thư tôi gửi: người nhận kèm giờ đọc (không có readAt là chưa đọc) */
-  receipts?: { name: string readAt?: number }[]
+  receipts?: { name: string; readAt?: number }[]
   /** Người gửi giả danh ai (cảnh báo giả mạo) */
   impersonates?: string
 }
 
-export type ThreadExtra = { summary?: string[] smartReplies?: string[] }
+export type ThreadExtra = { summary?: string[]; smartReplies?: string[] }
 
 const P = (id: string): Person => {
   const e = employees.find((x) => x.id === id)!

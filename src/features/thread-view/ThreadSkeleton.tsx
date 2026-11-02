@@ -1,11 +1,7 @@
 /** Đang tải: khung xương gồm tiêu đề, một đầu thư và ba dòng thân thư. */
 export function ThreadSkeleton() {
   return (
-    <div
-      aria-busy="true"
-      aria-label="Đang tải thư"
-      className="animate-pulse px-4 pt-6"
-    >
+    <div aria-busy="true" aria-label="Đang tải thư" className="animate-pulse px-4 pt-6">
       <div className="mb-6 h-6 w-2/3 rounded bg-surface-2" />
       <div className="rounded-xl border border-line p-4">
         <div className="flex items-center gap-3">

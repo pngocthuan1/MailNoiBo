@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom"
-import type { Email, FolderId } from "@/mock-data"
-import { useMailStore } from "@/shared/state/mailStore"
-import { getSiblings } from "./threadNav"
+import { useNavigate } from 'react-router-dom'
+import type { Email, FolderId } from '@/mock-data'
+import { useMailStore } from '@/shared/state/mailStore'
+import { getSiblings } from './threadNav'
 
 /** Vị trí của thư trong danh sách và các thao tác chuyển thư (thư kế tiếp / về danh sách). */
 export function useThreadNav(email: Email, folder: FolderId) {
@@ -20,9 +20,6 @@ export function useThreadNav(email: Email, folder: FolderId) {
     next,
     open: (m: Email) => navigate(`/mail/${folder}/${m.threadId}`),
     goList: () => navigate(`/mail/${folder}`),
-    goNextOrList: () =>
-      navigate(
-        fallback ? `/mail/${folder}/${fallback.threadId}` : `/mail/${folder}`,
-      ),
+    goNextOrList: () => navigate(fallback ? `/mail/${folder}/${fallback.threadId}` : `/mail/${folder}`),
   }
 }

@@ -1,14 +1,10 @@
-import { useEffect, useRef } from "react"
-import { Maximize2, X } from "lucide-react"
-import { RecipientsField } from "@/features/compose/RecipientsField"
-import { Button } from "@/shared/ui/Button"
-import type { InlineComposer as Composer } from "./useInlineComposer"
+import { useEffect, useRef } from 'react'
+import { Maximize2, X } from 'lucide-react'
+import { RecipientsField } from '@/features/compose/RecipientsField'
+import { Button } from '@/shared/ui/Button'
+import type { InlineComposer as Composer } from './useInlineComposer'
 
-const titles = {
-  reply: "Trả lời",
-  replyAll: "Trả lời tất cả",
-  forward: "Chuyển tiếp",
-}
+const titles = { reply: 'Trả lời', replyAll: 'Trả lời tất cả', forward: 'Chuyển tiếp' }
 
 /** Ô soạn nhúng ngay dưới chuỗi: Đến, nội dung, Gửi, Mở cửa sổ lớn (DT-03). */
 export function InlineComposer({ composer }: { composer: Composer }) {
@@ -18,7 +14,7 @@ export function InlineComposer({ composer }: { composer: Composer }) {
 
   useEffect(() => {
     if (!state) return
-    ref.current?.scrollIntoView({ block: "nearest", behavior: "smooth" })
+    ref.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     area.current?.focus()
     // chỉ khi mở hoặc đổi chế độ
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,10 +22,7 @@ export function InlineComposer({ composer }: { composer: Composer }) {
 
   if (!state) return null
   return (
-    <div
-      ref={ref}
-      className="no-print overflow-hidden rounded-xl border border-line bg-surface shadow-sm"
-    >
+    <div ref={ref} className="no-print overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
       <div className="flex h-10 items-center justify-between border-b border-line bg-surface-2 pr-1 pl-4">
         <span className="font-medium">{titles[state.mode]}</span>
         <span className="flex items-center">
@@ -55,10 +48,7 @@ export function InlineComposer({ composer }: { composer: Composer }) {
         </span>
       </div>
       {state.error && (
-        <p
-          role="alert"
-          className="bg-danger-soft px-4 py-2 text-xs text-danger"
-        >
+        <p role="alert" className="bg-danger-soft px-4 py-2 text-xs text-danger">
           {state.error}
         </p>
       )}

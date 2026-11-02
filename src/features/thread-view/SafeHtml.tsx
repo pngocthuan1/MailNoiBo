@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react"
-import DOMPurify from "dompurify"
+import { useEffect, useRef } from 'react'
+import DOMPurify from 'dompurify'
 
-type Props = { html: string onLinkClick: (href: string, text: string) => void }
+type Props = { html: string; onLinkClick: (href: string, text: string) => void }
 
 const style = `
 :host{display:block}
@@ -26,22 +26,17 @@ export function SafeHtml({ html, onLinkClick }: Props) {
   useEffect(() => {
     const el = host.current
     if (!el) return
-    const root = el.shadowRoot ?? el.attachShadow({ mode: "open" })
-    const clean = DOMPurify.sanitize(html, {
-      FORBID_TAGS: ["style", "form", "iframe"],
-      FORBID_ATTR: ["style"],
-    })
+    const root = el.shadowRoot ?? el.attachShadow({ mode: 'open' })
+    const clean = DOMPurify.sanitize(html, { FORBID_TAGS: ['style', 'form', 'iframe'], FORBID_ATTR: ['style'] })
     root.innerHTML = `<style>${style}</style><div class="b">${clean}</div>`
     const onClick = (e: Event) => {
-      const a = e
-        .composedPath()
-        .find((n): n is HTMLAnchorElement => n instanceof HTMLAnchorElement)
+      const a = e.composedPath().find((n): n is HTMLAnchorElement => n instanceof HTMLAnchorElement)
       if (!a) return
       e.preventDefault()
-      onLinkClick(a.href, a.textContent ?? "")
+      onLinkClick(a.href, a.textContent ?? '')
     }
-    el.addEventListener("click", onClick)
-    return () => el.removeEventListener("click", onClick)
+    el.addEventListener('click', onClick)
+    return () => el.removeEventListener('click', onClick)
   }, [html, onLinkClick])
 
   return <div ref={host} />

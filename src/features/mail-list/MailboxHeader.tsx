@@ -1,12 +1,7 @@
-import type { ReactNode } from "react"
-import { LabelDot } from "@/shared/ui/LabelDot"
+import type { ReactNode } from 'react'
+import { LabelDot } from '@/shared/ui/LabelDot'
 
-type Props = {
-  title: string
-  labelColor?: number
-  unread: number
-  right?: ReactNode
-}
+type Props = { title: string; labelColor?: number; unread: number; right?: ReactNode }
 
 /** Tiêu đề hộp thư (HT-01): tên hoặc tên nhãn kèm chấm màu, bên phải là số thư chưa đọc. */
 export function MailboxHeader({ title, labelColor, unread, right }: Props) {

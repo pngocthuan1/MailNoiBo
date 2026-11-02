@@ -18,7 +18,7 @@ export function ComposeMoreMenu({
   onOpenConfidential,
 }: Props) {
   const { signatures } = useSignatureStore()
-  const [showSigSubmenu, setShowSigSubmenu] = useState(false)
+  const [showSigSubmenu, setShowSigSubmenu] = useState(true)
 
   return (
     <Popover

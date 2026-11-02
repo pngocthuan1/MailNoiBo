@@ -324,7 +324,7 @@ const normalizeSubject = (s: string) =>
  */
 export function scheduleMail(
   mail: OutgoingMail & { scheduledAt: number },
-): { emailId: string undo: () => void } {
+): { emailId: string; undo: () => void } {
   const now = Date.now()
   const to = expandRecipients(mail.to)
   const cc = expandRecipients(mail.cc)
@@ -441,7 +441,7 @@ export function sendEarliestScheduledMail(): boolean {
  */
 export function sendMail(
   mail: OutgoingMail,
-): { threadId: string folder: Email["folder"] undo: () => void } {
+): { threadId: string; folder: Email["folder"]; undo: () => void } {
   const now = Date.now()
   const to = expandRecipients(mail.to)
   const cc = expandRecipients(mail.cc)

@@ -8,7 +8,7 @@ import {
   type ThreadDemoView,
 } from "./threadDemoStore"
 
-const views: { id: ThreadDemoView label: string }[] = [
+const views: { id: ThreadDemoView; label: string }[] = [
   { id: "normal", label: "Bình thường" },
   { id: "loading", label: "Đang tải" },
   { id: "error", label: "Lỗi" },
