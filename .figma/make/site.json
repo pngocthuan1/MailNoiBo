@@ -1,0 +1,10 @@
+{
+  "description": "Creates concise, SEO-friendly descriptions of web applications, highlighting their purpose, audience, and value for search and social previews.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
