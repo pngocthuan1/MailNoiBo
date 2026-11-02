@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import { sendEarliestScheduledMail } from '@/shared/state/mailStore'
 import { useSnackbar } from '@/shared/ui/Snackbar'
 import { setComposeDemo, useComposeDemoStore } from '@/features/compose/composeDemoStore'
+import { useAuthStore } from '@/features/auth/authStore'
 
 export type DemoState = 'normal' | 'loading' | 'empty' | 'error'
 
@@ -15,8 +17,15 @@ type Props = { value: DemoState; onChange: (s: DemoState) => void; onSimulateNew
 
 /** Bộ chuyển trạng thái demo để xem lại từng trạng thái của trang. */
 export function DemoStateSwitcher({ value, onChange, onSimulateNewMail }: Props) {
+  const navigate = useNavigate()
   const snackbar = useSnackbar()
   const { undoSendSeconds } = useComposeDemoStore()
+  const { expireSession } = useAuthStore()
+
+  const handleExpireSession = () => {
+    expireSession()
+    navigate('/login?expired=1')
+  }
 
   const handleSendEarliest = () => {
     const success = sendEarliestScheduledMail()
@@ -77,6 +86,15 @@ export function DemoStateSwitcher({ value, onChange, onSimulateNewMail }: Props)
           <option value={30}>30s</option>
         </select>
       </div>
+
+      <button
+        type="button"
+        onClick={handleExpireSession}
+        className="h-6 cursor-pointer rounded-full border border-danger/40 bg-danger-soft px-3 font-medium text-danger hover:bg-danger-soft/80"
+        title="Mô phỏng phiên làm việc bị hết hạn (401)"
+      >
+        Mô phỏng hết phiên
+      </button>
     </div>
   )
 }

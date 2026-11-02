@@ -1,6 +1,6 @@
 import { Navigate, NavLink, Outlet } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
-import { currentUser } from '@/mock-data'
+import { useAuthStore } from '@/features/auth/authStore'
 
 const links = [
   { to: '/admin', label: 'Tổng quan', end: true },
@@ -13,7 +13,8 @@ const links = [
 ]
 
 export function AdminLayout() {
-  if (currentUser.role !== 'admin') return <Navigate to="/403" replace />
+  const { currentUser } = useAuthStore()
+  if (currentUser?.role !== 'admin') return <Navigate to="/403" replace />
   return (
     <div className="flex min-h-full flex-col bg-bg md:flex-row">
       <nav aria-label="Quản trị" className="shrink-0 p-4 md:w-60">
