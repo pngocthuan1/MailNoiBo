@@ -440,6 +440,19 @@ export const recentSearches = [
   "họp giao ban",
 ]
 
+export const popularKeywords = [
+  "báo cáo",
+  "hợp đồng",
+  "hóa đơn",
+  "ngân sách",
+  "kế hoạch",
+  "họp giao ban",
+  "Sao Mai",
+  "bảo trì",
+  "quy chế",
+  "tuyển dụng",
+]
+
 const NOW = Date.now()
 const HOUR = 3_600_000
 const n = (id: string) => employees.find((e) => e.id === id)!.name
@@ -1127,10 +1140,12 @@ export type Attachment = {
   name: string
   size: number
   kind: "image" | "pdf" | "doc" | "sheet" | "zip" | "other"
-  /** Số trang (PDF) */
+  /** Số trang (PDF / Doc) */
   pages?: number
   /** Lý do bị chặn (virus); tệp bị chặn không thể tải về */
   blocked?: string
+  /** Nội dung văn bản giả lập theo trang để tìm kiếm (TM-09) */
+  pageTexts?: { page: number; text: string }[]
 }
 
 export type Message = {
@@ -1233,6 +1248,24 @@ export const threadMessages: Record<string, Message[]> = {
           size: 1_240_000,
           kind: "pdf",
           pages: 4,
+          pageTexts: [
+            {
+              page: 1,
+              text: "CÔNG TY CỔ PHẦN CÔNG NGHỆ THÀNH ĐẠT - Báo giá gói bảo trì hạ tầng công nghệ thông tin năm 2027 cho Hoàng Long Group.",
+            },
+            {
+              page: 2,
+              text: "Hạng mục phần cứng: Máy chủ trung tâm dữ liệu Dell PowerEdge R740, hệ thống chuyển mạch mạng Core Switch Cisco Catalyst 9300.",
+            },
+            {
+              page: 3,
+              text: "Giải pháp sao lưu và phục hồi thảm họa tự động Veeam Backup & Replication, hỗ trợ hạ tầng máy ảo VMware ESXi.",
+            },
+            {
+              page: 4,
+              text: "Phương án tài chính đặc biệt: chiết khấu 15% cho hợp đồng ký trước ngày 31/12/2026. Tổng giá trị gói Premium là 468.000.000 VNĐ.",
+            },
+          ],
         },
         {
           id: "a2",
@@ -1253,6 +1286,21 @@ export const threadMessages: Record<string, Message[]> = {
           name: "phu-luc-dieu-khoan-ky-thuat.docx",
           size: 86_000,
           kind: "doc",
+          pages: 3,
+          pageTexts: [
+            {
+              page: 1,
+              text: "PHỤ LỤC KỸ THUẬT VÀ TIÊU CHUẨN AN TOÀN THÔNG TIN NĂM 2027",
+            },
+            {
+              page: 2,
+              text: "Quy chuẩn mã hóa đường truyền TLS 1.3 và xác thực hai bước bắt buộc cho toàn bộ tài khoản quản trị hệ thống đám mây.",
+            },
+            {
+              page: 3,
+              text: "Thời gian cam kết phản hồi sự cố khẩn cấp mức độ 1 (P1) trong vòng 30 phút kể từ khi tiếp nhận thông báo.",
+            },
+          ],
         },
       ],
     },
@@ -1345,6 +1393,32 @@ export const threadMessages: Record<string, Message[]> = {
           size: 2_050_000,
           kind: "pdf",
           pages: 6,
+          pageTexts: [
+            {
+              page: 1,
+              text: "HỢP ĐỒNG DỊCH VỤ ĐIỆN TOÁN ĐÁM MÂY - Mã hợp đồng HLD-CLOUD-2027",
+            },
+            {
+              page: 2,
+              text: "Điều 4: Cam kết mức độ dịch vụ Service Level Agreement (SLA) đạt tối thiểu 99.99% thời gian hoạt động liên tục hàng năm.",
+            },
+            {
+              page: 3,
+              text: "Điều 8: Biện pháp phòng chống tấn công từ chối dịch vụ phân tán DDoS và bảo mật dữ liệu khách hàng theo tiêu chuẩn ISO 27001.",
+            },
+            {
+              page: 4,
+              text: "Điều 12: Chính sách lưu trữ dữ liệu dự phòng định kỳ hàng tuần và khôi phục khi có sự cố thiên tai.",
+            },
+            {
+              page: 5,
+              text: "Điều 15: Quyền sở hữu trí tuệ và bảo mật mã nguồn ứng dụng phần mềm triển khai trên hạ tầng đám mây.",
+            },
+            {
+              page: 6,
+              text: "Điều 18: Các điều khoản về thanh lý hợp đồng và chuyển giao tài nguyên hệ thống sau khi chấm dứt hợp tác.",
+            },
+          ],
         },
       ],
     },

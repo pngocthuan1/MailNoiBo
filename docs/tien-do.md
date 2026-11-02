@@ -7,12 +7,13 @@
 - Lượt 4: Trang Đọc thư (23 mã): DT-01 đến DT-11, BM-01, BM-02, NB-03, NB-04, NH-02, NH-07, NH-09, HT-04, HT-05, HT-09, HT-10, NB-06.
 - Lượt 5: Cửa sổ Soạn thư nổi (SO-01 đến SO-06, SO-13, NB-01), trình soạn nhúng gửi qua cùng logic, thư gửi vào Đã gửi và vào chuỗi.
 - Lượt 6: Soạn thư nâng cao SO-07 đến SO-12 (hoàn tác gửi, hẹn giờ, chữ ký, mẫu thư, chèn ảnh/emoji/bảng, chế độ bảo mật).
+- Lượt 7: Tìm kiếm (TM-01 đến TM-09: tìm từ khóa theo URL, hiển thị kết quả tô vàng và viên thuốc hộp thư gốc, lịch sử tìm kiếm 8 mục, thanh phạm vi, bộ lọc nhanh & nâng cao 560px, toán tử & viên thuốc lỗi có tooltip, gợi ý 3 nhóm khi gõ, tạo bộ lọc từ tìm kiếm, tìm kiếm nội dung trong tệp đính kèm).
 
 ## Việc đang làm
-- Lượt 7: Tìm kiếm hoặc các tính năng tiếp theo theo lộ trình.
+- Lượt 8: Đăng nhập và xác thực hoặc các tính năng tiếp theo theo lộ trình.
 
 ## Chưa làm (theo thứ tự dự kiến)
-Tìm kiếm; Đăng nhập và xác thực; Danh bạ; Cài đặt (2 lượt, nối chữ ký, mẫu thư, thời gian hoàn tác gửi); Nhãn và bộ lọc; Quản trị; Thông báo và ngoại tuyến phần còn lại.
+Đăng nhập và xác thực; Danh bạ; Cài đặt (2 lượt, nối chữ ký, mẫu thư, thời gian hoàn tác gửi); Nhãn và bộ lọc; Quản trị; Thông báo và ngoại tuyến phần còn lại.
 
 ## Ghi chú
 - Dữ liệu là mock; "Tải tất cả (.zip)", dịch thư, xem PDF là giả lập.

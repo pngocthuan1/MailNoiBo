@@ -8,14 +8,14 @@ import {
   Paperclip,
   Star,
 } from "lucide-react"
-import type { Email, FolderId } from "@/mock-data"
+import type { Attachment, Email, FolderId } from "@/mock-data"
 import { folderName } from "@/shared/state/mailSelectors"
 import { dueInfo, futureTime, listTime } from "./mailFormat"
 import { useAllLabels } from "@/shared/state/mailStore"
 import { LabelPill } from "./LabelPill"
 import type { useMailActions } from "./useMailActions"
 
-export type Variant = FolderId | "label" | "shared"
+export type Variant = FolderId | "label" | "shared" | "search"
 
 type Props = {
   email: Email
@@ -31,6 +31,39 @@ type Props = {
   onOpen: () => void
   onDragStart: (e: DragEvent) => void
   onDragEnd: () => void
+  searchQuery?: string
+  previewSnippet?: string
+  originLabel?: string
+  matchedAttachment?: {
+    file: Attachment
+    page: number
+    snippet: string
+    fileIndex: number
+  }
+  onOpenAttachment?: (file: Attachment, page: number, fileIndex: number) => void
+}
+
+function renderHighlighted(text: string, query?: string): ReactNode {
+  if (!query || !query.trim() || !text) return text
+  const cleanQ = query.trim()
+  const lowerText = text.toLowerCase()
+  const lowerQ = cleanQ.toLowerCase()
+  const idx = lowerText.indexOf(lowerQ)
+  if (idx === -1) return text
+
+  const before = text.slice(0, idx)
+  const match = text.slice(idx, idx + cleanQ.length)
+  const after = text.slice(idx + cleanQ.length)
+
+  return (
+    <>
+      {before}
+      <mark className="rounded-xs bg-amber-200/80 px-0.5 font-semibold text-amber-950 dark:bg-amber-900/50 dark:text-amber-100">
+        {match}
+      </mark>
+      {renderHighlighted(after, query)}
+    </>
+  )
 }
 
 const outgoing: Variant[] = ["sent", "drafts", "scheduled"]
@@ -49,6 +82,11 @@ export function MailRow({
   onOpen,
   onDragStart,
   onDragEnd,
+  searchQuery,
+  previewSnippet,
+  originLabel,
+  matchedAttachment,
+  onOpenAttachment,
 }: Props) {
   const allLabels = useAllLabels()
   const labels = email.labelIds
@@ -57,8 +95,12 @@ export function MailRow({
   const isOutgoing = outgoing.includes(variant)
   const isDraft = variant === "drafts"
   const due = email.todoDue ? dueInfo(email.todoDue) : null
-  // Gắn sao / Quan trọng / nhãn: hiện hộp thư gốc của thư.
-  const showOrigin = variant === "starred" || variant === "important"
+  // Gắn sao / Quan trọng / nhãn / tìm kiếm: hiện hộp thư gốc của thư.
+  const showOrigin =
+    variant === "starred" ||
+    variant === "important" ||
+    variant === "search" ||
+    !!originLabel
 
   const sentRow = variant === "sent"
   const recipients = sentRow ? (email.sentTo ?? email.to) : email.to
@@ -186,45 +228,100 @@ export function MailRow({
         />
       </button>
 
-      <span className="w-32 shrink-0 truncate px-2 sm:w-44">{sender}</span>
+      <span className="w-32 shrink-0 truncate px-2 sm:w-44">
+        {searchQuery ? renderHighlighted(sender, searchQuery) : sender}
+      </span>
 
-      <span className="flex min-w-0 flex-1 items-center gap-2">
-        {showOrigin && (
-          <span className="inline-flex h-5 shrink-0 items-center rounded-full bg-surface-2 px-2 text-xs font-medium text-muted">
-            {folderName(email.folder)}
-          </span>
-        )}
-        {labels.length > 0 && (
-          <span className="hidden shrink-0 items-center gap-1 lg:flex">
-            {labels.slice(0, 2).map((l) => (
-              <LabelPill key={l.id} label={l} />
-            ))}
-            {labels.length > 2 && (
-              <span className="text-xs text-muted">+{labels.length - 2}</span>
-            )}
-          </span>
-        )}
-        {due && (
-          <span
-            className={`inline-flex h-5 shrink-0 items-center rounded-full px-2 text-xs font-medium ${
-              due.overdue
-                ? "bg-danger-soft text-danger"
-                : "bg-warning-soft text-warning"
-            }`}
-          >
-            Cần xử lý · {due.text}
-          </span>
-        )}
-        <span className="min-w-0 flex-1 truncate">
-          {isDraft && <span className="mr-1 text-danger">Nháp</span>}
-          {email.confidential && (
-            <span title="Thư bảo mật" className="mr-1 inline-flex items-center">
-              <Lock size={13} className="text-accent" />
+      <span className="flex min-w-0 flex-1 flex-col justify-center">
+        <span className="flex min-w-0 items-center gap-2">
+          {showOrigin && (
+            <span className="inline-flex h-5 shrink-0 items-center rounded-full bg-surface-2 px-2 text-xs font-medium text-muted">
+              {originLabel || folderName(email.folder)}
             </span>
           )}
-          <span>{email.subject || "(Không có tiêu đề)"}</span>
-          <span className="font-normal text-muted"> - {email.preview}</span>
+          {labels.length > 0 && (
+            <span className="hidden shrink-0 items-center gap-1 lg:flex">
+              {labels.slice(0, 2).map((l) => (
+                <LabelPill key={l.id} label={l} />
+              ))}
+              {labels.length > 2 && (
+                <span className="text-xs text-muted">+{labels.length - 2}</span>
+              )}
+            </span>
+          )}
+          {due && (
+            <span
+              className={`inline-flex h-5 shrink-0 items-center rounded-full px-2 text-xs font-medium ${
+                due.overdue
+                  ? "bg-danger-soft text-danger"
+                  : "bg-warning-soft text-warning"
+              }`}
+            >
+              Cần xử lý · {due.text}
+            </span>
+          )}
+          <span className="min-w-0 flex-1 truncate">
+            {isDraft && <span className="mr-1 text-danger">Nháp</span>}
+            {email.confidential && (
+              <span
+                title="Thư bảo mật"
+                className="mr-1 inline-flex items-center"
+              >
+                <Lock size={13} className="text-accent" />
+              </span>
+            )}
+            <span>
+              {searchQuery
+                ? renderHighlighted(
+                    email.subject || "(Không có tiêu đề)",
+                    searchQuery,
+                  )
+                : email.subject || "(Không có tiêu đề)"}
+            </span>
+            <span className="font-normal text-muted">
+              {" "}
+              -{" "}
+              {searchQuery
+                ? renderHighlighted(
+                    previewSnippet || email.preview,
+                    searchQuery,
+                  )
+                : email.preview}
+            </span>
+          </span>
         </span>
+
+        {/* TM-09: Viên thuốc Khớp trong tệp đính kèm */}
+        {matchedAttachment && (
+          <span className="mt-0.5 flex items-center">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                onOpenAttachment?.(
+                  matchedAttachment.file,
+                  matchedAttachment.page,
+                  matchedAttachment.fileIndex,
+                )
+              }}
+              title="Bấm để xem tệp tại trang này"
+              className="inline-flex max-w-[90%] items-center gap-1.5 truncate rounded bg-amber-500/15 px-2 py-0.5 text-xs font-medium text-amber-800 hover:bg-amber-500/25 dark:text-amber-200"
+            >
+              <Paperclip
+                size={12}
+                className="shrink-0 text-amber-600 dark:text-amber-400"
+              />
+              <span className="font-semibold text-accent">Khớp trong tệp:</span>
+              <span className="underline">{matchedAttachment.file.name}</span>
+              <span className="rounded bg-amber-500/20 px-1 font-mono text-[10px]">
+                Trang {matchedAttachment.page}
+              </span>
+              <span className="truncate italic opacity-80">
+                - "{matchedAttachment.snippet}"
+              </span>
+            </button>
+          </span>
+        )}
       </span>
 
       {email.hasAttachment && (
